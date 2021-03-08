@@ -19,13 +19,16 @@ class MongodbPassportServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        Passport::useAuthCodeModel(AuthCode::class);
-        Passport::useClientModel(Client::class);
-        Passport::usePersonalAccessClientModel(PersonalAccessClient::class);
-        Passport::useTokenModel(Token::class);
-
-        $this->app->bind(PassportRefreshTokenRepository::class, function () {
-            return $this->app->make(RefreshTokenRepository::class);
-        });
+        if (class_exists('Illuminate\Foundation\AliasLoader')) {
+            $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+            $loader->alias('Laravel\Passport\AuthCode', AuthCode::class);
+            $loader->alias('Laravel\Passport\Client', Client::class);
+            $loader->alias('Laravel\Passport\PersonalAccessClient', PersonalAccessClient::class);
+            $loader->alias('Laravel\Passport\Token', Token::class);
+        } else {
+            class_alias('Laravel\Passport\AuthCode', AuthCode::class);
+            class_alias('Laravel\Passport\Client', Client::class);
+            class_alias('Laravel\Passport\PersonalAccessClient', PersonalAccessClient::class);
+            class_alias('Laravel\Passport\Token', Token::class);
     }
 }
