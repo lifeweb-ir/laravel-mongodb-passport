@@ -30,5 +30,6 @@ class MongodbPassportServiceProvider extends ServiceProvider
             class_alias('Laravel\Passport\Client', Client::class);
             class_alias('Laravel\Passport\PersonalAccessClient', PersonalAccessClient::class);
             class_alias('Laravel\Passport\Token', Token::class);
+        }
     }
 }
